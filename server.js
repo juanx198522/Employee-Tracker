@@ -12,7 +12,7 @@ console.log(`
 const express = require('express');
 const inquirer = require('inquirer');
 const { displayAllDepartments, displayAllRole, displayAllEmployee } = require('./views');
-const { getAllDepartments, getAllRoles, addDepartment, addRole, addEmployee } = require('./database');
+const { getAllDepartments, getAllRoles, addDepartment, addRole, addEmployee, updateEmployeeRole, getAllEmployee } = require('./database');
 
 function showMenu() {
     inquirer
@@ -36,7 +36,7 @@ function showMenu() {
             const { option } = answers;
             switch (option) {
                 case 'View all departments':
-                    displayAllDepartments();
+                    displayAllDepartments(showMenu);
                     break;
                 case 'View all roles':
                     displayAllRole();
@@ -49,6 +49,12 @@ function showMenu() {
                     break;
                 case 'Add a role':
                     addRolePrompt();
+                    break;
+                case 'Add an employee':
+                    addEmployeePrompt();
+                    break;
+                case 'Update an employee role':
+                    updateEmployeeRolePrompt();
                     break;
                 default:
                     console.log('Invalid option.');
@@ -73,11 +79,11 @@ function addDepartmentPrompt() {
             addDepartment(departmentName)
                 .then(() => {
                     console.log('Department added successfully!');
-                    showMenu(); 
+                    showMenu();
                 })
                 .catch((err) => {
                     console.error('Error adding department:', err);
-                    showMenu(); 
+                    showMenu();
                 });
         })
         .catch((err) => {
@@ -115,11 +121,11 @@ function addRolePrompt() {
                     addRole(roleName, roleSalary, roleDepartment)
                         .then(() => {
                             console.log('Role added successfully!');
-                            showMenu(); 
+                            showMenu();
                         })
                         .catch((err) => {
                             console.error('Error adding role:', err);
-                            showMenu(); 
+                            showMenu();
                         });
                 })
                 .catch((err) => {
@@ -163,12 +169,51 @@ function addEmployeePrompt() {
                     const { firstName, lastName, roleId, managerId } = answers;
                     addEmployee(firstName, lastName, roleId, managerId)
                         .then(() => {
-                            console.log('Role added successfully!');
-                            showMenu(); 
+                            console.log('Employee added successfully!');
+                            showMenu();
                         })
                         .catch((err) => {
-                            console.error('Error adding role:', err);
-                            showMenu(); 
+                            console.error('Error adding employee:', err);
+                            showMenu();
+                        });
+                })
+                .catch((err) => {
+                    console.error('Error:', err);
+                });
+        });
+}
+
+function updateEmployeeRolePrompt() {
+    getAllEmployee()
+        .then((employees) => {
+            const employeeChoices = employees.map((employee) => ({
+                name: `${employee.first_name} ${employee.last_name}`,
+                value: employee.id,
+            }));
+            inquirer
+                .prompt([
+                    {
+                        type: 'list',
+                        name: 'employeeId',
+                        message: 'Select the employee:',
+                        choices: employeeChoices,
+                    },
+                    {
+                        type: 'input',
+                        name: 'newRoleId',
+                        message: 'Enter the new role ID:',
+                    },
+                ])
+                .then((answers) => {
+                    const { employeeId, newRoleId } = answers;
+                    updateEmployeeRole(newRoleId, employeeId)
+                        .then(() => {
+                            console.log('Employee role updated successfully!');
+                            showMenu();
+                        })
+                        .catch((err) => {
+                            console.error('Error updating employee role:', err);
+                            showMenu();
                         });
                 })
                 .catch((err) => {

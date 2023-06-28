@@ -13,7 +13,7 @@ connection.connect((err) => {
         console.error('Error connecting to the database:', err);
         return;
     }
-    console.log('Connected to the database.');
+    console.log('');
 });
 
 function getAllDepartments() {
@@ -100,4 +100,20 @@ function addEmployee(firstName, lastName, roleId, managerId) {
     });
 }
 
-module.exports = { getAllDepartments, getAllRoles, getAllEmployee, addDepartment, addRole, addEmployee };
+function updateEmployeeRole(roleId, employeeId) {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            'UPDATE employee SET role_id = ? WHERE id = ?',
+            [roleId, employeeId],
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            }
+        );
+    });
+}
+
+module.exports = { getAllDepartments, getAllRoles, getAllEmployee, addDepartment, addRole, addEmployee, updateEmployeeRole };

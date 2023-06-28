@@ -1,6 +1,4 @@
-const { getAllDepartments } = require('./database');
-const { getAllRoles } = require('./database');
-const { getAllEmployee } = require('./database');
+const { getAllDepartments, getAllRoles, getAllEmployee } = require('./database');
 
 function displayAllDepartments() {
     getAllDepartments()
