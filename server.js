@@ -39,10 +39,10 @@ function showMenu() {
                     displayAllDepartments(showMenu);
                     break;
                 case 'View all roles':
-                    displayAllRole();
+                    displayAllRole(showMenu);
                     break;
                 case 'View all employees':
-                    displayAllEmployee();
+                    displayAllEmployee(showMenu);
                     break;
                 case 'Add a department':
                     addDepartmentPrompt();

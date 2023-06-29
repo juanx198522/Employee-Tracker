@@ -43,7 +43,7 @@ N/A
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## URL of the functional deployed application
-[https://note-taker-11-a2cc57ffa002.herokuapp.com/](https://note-taker-11-a2cc57ffa002.herokuapp.com/)
+## A walkthrough video demonstrating the functionality of the application:
+[https://drive.google.com/file/d/1xQgOPVyLu1LPwh4ARUojc1YDOD-nIbuV/view](https://drive.google.com/file/d/1xQgOPVyLu1LPwh4ARUojc1YDOD-nIbuV/view)
 
 ---
